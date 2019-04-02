@@ -108,6 +108,7 @@ namespace KingCorporation
         private void button1_Click(object sender, EventArgs e)
         {
             richTextBox1.Text = "";
+            label1.Text = "";
         }
 
         private void comboBox2_SelectionChangeCommitted(object sender, EventArgs e)
@@ -124,13 +125,13 @@ namespace KingCorporation
                     Requests3();
                     break;
                 case 3:
-                   
+                    Requests4();
                     break;
                 case 4:
-                   
+                    Requests5();
                     break;
                 case 5:
-                    
+                    Requests6();
                     break;
                 case 6:
                    
@@ -149,7 +150,6 @@ namespace KingCorporation
             // SELECT* FROM `table` GROUP BY name WHERE[Code] = @Code
             //  command.Parameters.AddWithValue("Code", textBox9.Text);
             string text = "";
-
             string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Slava\source\repos\KingCorporation\KingCorporation\KingCorporation.mdf;Integrated Security=True";
 
             sqlConnection = new SqlConnection(connectionString);
@@ -158,6 +158,7 @@ namespace KingCorporation
 
             SqlCommand сommand = sqlConnection.CreateCommand();
             сommand.CommandText = "select [location_id] from [DEPARTMENT] group by [location_id]";
+            label1.Text = "select [location_id] from [DEPARTMENT] group by [location_id]";
             try
             {
                 SqlDataReader sqlReader = null;
@@ -209,6 +210,7 @@ namespace KingCorporation
 
             SqlCommand сommand = sqlConnection.CreateCommand();
             сommand.CommandText = "select [last_name],  cast (NULLIF([commission],0)*100/[salary] as decimal (16, 2))  from [EMPLOYEE] ";
+            label1.Text = "select [last_name],  cast (NULLIF([commission],0)*100/[salary] as decimal (16, 2))  from [EMPLOYEE]";
 
             try
             {
@@ -261,6 +263,7 @@ namespace KingCorporation
 
             SqlCommand сommand = sqlConnection.CreateCommand();
             сommand.CommandText = "select concat (LEFT ([first_name],1), '.',[middle_initial], '.',[last_name])  from [EMPLOYEE] ";
+            label1.Text = "select concat (LEFT ([first_name],1), '.',[middle_initial], '.',[last_name])  from [EMPLOYEE] ";
 
             try
             {
@@ -301,6 +304,164 @@ namespace KingCorporation
             }
         }
 
+        private void Requests4()
+        {
+            string text = "";
+
+            string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Slava\source\repos\KingCorporation\KingCorporation\KingCorporation.mdf;Integrated Security=True";
+
+            sqlConnection = new SqlConnection(connectionString);
+
+            sqlConnection.Open();
+
+            SqlCommand сommand = sqlConnection.CreateCommand();
+            сommand.CommandText = "select [last_name],  cast (NULLIF([commission],0)*100/[salary] as decimal (16, 2))  from [EMPLOYEE] ";
+            label1.Text = "select [last_name],  cast (NULLIF([commission],0)*100/[salary] as decimal (16, 2))  from [EMPLOYEE]";
+
+            try
+            {
+                SqlDataReader sqlReader = null;
+                try
+                {
+                    sqlReader = сommand.ExecuteReader();
+
+                    while (sqlReader.Read())
+                    {
+                        text += sqlReader[0] + " " + sqlReader[1];
+                        text += "\n";
+                    }
+
+                    if (sqlReader != null)
+                    {
+                        sqlReader.Close();
+                    }
+
+                    richTextBox1.Text = text;
+                }
+                catch
+                {
+                    MessageBox.Show("Что то пошло не так при считывании записей.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                finally
+                {
+                    if (sqlReader != null)
+                    {
+                        sqlReader.Close();
+                    }
+                }
+            }
+
+            catch
+            {
+                MessageBox.Show("Что то пошло не так.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void Requests5()
+        {
+            string text = "";
+
+            string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Slava\source\repos\KingCorporation\KingCorporation\KingCorporation.mdf;Integrated Security=True";
+
+            sqlConnection = new SqlConnection(connectionString);
+
+            sqlConnection.Open();
+
+            SqlCommand сommand = sqlConnection.CreateCommand();
+            сommand.CommandText = "select [last_name],  cast (NULLIF([commission],0)*100/[salary] as decimal (16, 2))  from [EMPLOYEE] ";
+            label1.Text = "select [last_name],  cast (NULLIF([commission],0)*100/[salary] as decimal (16, 2))  from [EMPLOYEE]";
+
+            try
+            {
+                SqlDataReader sqlReader = null;
+                try
+                {
+                    sqlReader = сommand.ExecuteReader();
+
+                    while (sqlReader.Read())
+                    {
+                        text += sqlReader[0] + " " + sqlReader[1];
+                        text += "\n";
+                    }
+
+                    if (sqlReader != null)
+                    {
+                        sqlReader.Close();
+                    }
+
+                    richTextBox1.Text = text;
+                }
+                catch
+                {
+                    MessageBox.Show("Что то пошло не так при считывании записей.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                finally
+                {
+                    if (sqlReader != null)
+                    {
+                        sqlReader.Close();
+                    }
+                }
+            }
+
+            catch
+            {
+                MessageBox.Show("Что то пошло не так.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void Requests6()
+        {
+            string text = "";
+
+            string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Slava\source\repos\KingCorporation\KingCorporation\KingCorporation.mdf;Integrated Security=True";
+
+            sqlConnection = new SqlConnection(connectionString);
+
+            sqlConnection.Open();
+
+            SqlCommand сommand = sqlConnection.CreateCommand();
+            сommand.CommandText = "select [last_name],  cast (NULLIF([commission],0)*100/[salary] as decimal (16, 2))  from [EMPLOYEE] ";
+            label1.Text = "select [last_name],  cast (NULLIF([commission],0)*100/[salary] as decimal (16, 2))  from [EMPLOYEE]";
+
+            try
+            {
+                SqlDataReader sqlReader = null;
+                try
+                {
+                    sqlReader = сommand.ExecuteReader();
+
+                    while (sqlReader.Read())
+                    {
+                        text += sqlReader[0] + " " + sqlReader[1];
+                        text += "\n";
+                    }
+
+                    if (sqlReader != null)
+                    {
+                        sqlReader.Close();
+                    }
+
+                    richTextBox1.Text = text;
+                }
+                catch
+                {
+                    MessageBox.Show("Что то пошло не так при считывании записей.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                finally
+                {
+                    if (sqlReader != null)
+                    {
+                        sqlReader.Close();
+                    }
+                }
+            }
+
+            catch
+            {
+                MessageBox.Show("Что то пошло не так.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
     }
 
 }
