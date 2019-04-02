@@ -121,7 +121,7 @@
             this.pRODUCTTableAdapter = new KingCorporation.KingCorporationDataSet7TableAdapters.PRODUCTTableAdapter();
             this.sALES_ORDERTableAdapter = new KingCorporation.KingCorporationDataSet8TableAdapters.SALES_ORDERTableAdapter();
             this.kingCorporationDataSet9 = new KingCorporation.KingCorporationDataSet();
-            this.label1 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.RichTextBox();
             this.tabControl1.SuspendLayout();
             this.dataBase.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView9)).BeginInit();
@@ -747,7 +747,14 @@
             this.comboBox2.Items.AddRange(new object[] {
             "1",
             "2",
-            "3"});
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10"});
             this.comboBox2.Location = new System.Drawing.Point(0, 5);
             this.comboBox2.Name = "comboBox2";
             this.comboBox2.Size = new System.Drawing.Size(219, 21);
@@ -758,7 +765,7 @@
             // 
             this.richTextBox1.Location = new System.Drawing.Point(0, 27);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(970, 378);
+            this.richTextBox1.Size = new System.Drawing.Size(606, 378);
             this.richTextBox1.TabIndex = 0;
             this.richTextBox1.Text = "";
             // 
@@ -830,13 +837,11 @@
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.Location = new System.Drawing.Point(447, 5);
+            this.label1.Location = new System.Drawing.Point(613, 27);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(115, 20);
+            this.label1.Size = new System.Drawing.Size(357, 378);
             this.label1.TabIndex = 3;
-            this.label1.Text = "Text of request";
+            this.label1.Text = "";
             // 
             // Form1
             // 
@@ -883,7 +888,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.cUSTOMERBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.kingCorporationDataSet)).EndInit();
             this.requests.ResumeLayout(false);
-            this.requests.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.kingCorporationDataSetBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.kingCorporationDataSet9)).EndInit();
             this.ResumeLayout(false);
@@ -985,7 +989,7 @@
         private System.Windows.Forms.ComboBox comboBox2;
         private System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.RichTextBox label1;
     }
 }
 

@@ -22,8 +22,6 @@ namespace KingCorporation
             string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Slava\source\repos\KingCorporation\KingCorporation\KingCorporation.mdf;Integrated Security=True";
 
             sqlConnection = new SqlConnection(connectionString);
-
-            sqlConnection.Open();
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
@@ -92,7 +90,7 @@ namespace KingCorporation
             }
         }
 
-        void AllHide()
+        private void AllHide()
         {
             if (dataGridView1.Visible) dataGridView1.Visible = false;
             if (dataGridView2.Visible) dataGridView2.Visible = false;
@@ -134,13 +132,15 @@ namespace KingCorporation
                     Requests6();
                     break;
                 case 6:
-                   
+                    Requests7();
                     break;
                 case 7:
-                    
+                    Requests8();
                     break;
                 case 8:
-                   
+                    Requests9();
+                    break;
+                case 9:
                     break;
             }
         }
@@ -156,15 +156,15 @@ namespace KingCorporation
 
             sqlConnection.Open();
 
-            SqlCommand сommand = sqlConnection.CreateCommand();
-            сommand.CommandText = "select [location_id] from [DEPARTMENT] group by [location_id]";
+            SqlCommand command = sqlConnection.CreateCommand();
+            command.CommandText = "select [location_id] from [DEPARTMENT] group by [location_id]";
             label1.Text = "select [location_id] from [DEPARTMENT] group by [location_id]";
             try
             {
                 SqlDataReader sqlReader = null;
                 try
                 {
-                    sqlReader = сommand.ExecuteReader();
+                    sqlReader = command.ExecuteReader();
 
                     while (sqlReader.Read())
                     {
@@ -208,8 +208,8 @@ namespace KingCorporation
 
             sqlConnection.Open();
 
-            SqlCommand сommand = sqlConnection.CreateCommand();
-            сommand.CommandText = "select [last_name],  cast (NULLIF([commission],0)*100/[salary] as decimal (16, 2))  from [EMPLOYEE] ";
+            SqlCommand command = sqlConnection.CreateCommand();
+            command.CommandText = "select [last_name],  cast (NULLIF([commission],0)*100/[salary] as decimal (16, 2))  from [EMPLOYEE] ";
             label1.Text = "select [last_name],  cast (NULLIF([commission],0)*100/[salary] as decimal (16, 2))  from [EMPLOYEE]";
 
             try
@@ -217,7 +217,7 @@ namespace KingCorporation
                 SqlDataReader sqlReader = null;
                 try
                 {
-                    sqlReader = сommand.ExecuteReader();
+                    sqlReader = command.ExecuteReader();
 
                     while (sqlReader.Read())
                     {
@@ -261,8 +261,8 @@ namespace KingCorporation
 
             sqlConnection.Open();
 
-            SqlCommand сommand = sqlConnection.CreateCommand();
-            сommand.CommandText = "select concat (LEFT ([first_name],1), '.',[middle_initial], '.',[last_name])  from [EMPLOYEE] ";
+            SqlCommand command = sqlConnection.CreateCommand();
+            command.CommandText = "select concat (LEFT ([first_name],1), '.',[middle_initial], '.',[last_name])  from [EMPLOYEE] ";
             label1.Text = "select concat (LEFT ([first_name],1), '.',[middle_initial], '.',[last_name])  from [EMPLOYEE] ";
 
             try
@@ -270,7 +270,7 @@ namespace KingCorporation
                 SqlDataReader sqlReader = null;
                 try
                 {
-                    sqlReader = сommand.ExecuteReader();
+                    sqlReader = command.ExecuteReader();
 
                     while (sqlReader.Read())
                     {
@@ -314,21 +314,22 @@ namespace KingCorporation
 
             sqlConnection.Open();
 
-            SqlCommand сommand = sqlConnection.CreateCommand();
-            сommand.CommandText = "select [last_name],  cast (NULLIF([commission],0)*100/[salary] as decimal (16, 2))  from [EMPLOYEE] ";
-            label1.Text = "select [last_name],  cast (NULLIF([commission],0)*100/[salary] as decimal (16, 2))  from [EMPLOYEE]";
+            SqlCommand command = sqlConnection.CreateCommand();
+            command.CommandText = "SELECT [total], CEILING ([total]), FLOOR([total]), ROUND([total], -1) FROM [SALES_ORDER]";
+
+            label1.Text = "SELECT [total], CEILING ([total]), FLOOR([total]), ROUND([total], -1) FROM [SALES_ORDER]";
 
             try
             {
                 SqlDataReader sqlReader = null;
                 try
                 {
-                    sqlReader = сommand.ExecuteReader();
+                    sqlReader = command.ExecuteReader();
 
                     while (sqlReader.Read())
                     {
-                        text += sqlReader[0] + " " + sqlReader[1];
-                        text += "\n";
+                        text += (sqlReader[0]).ToString() + "         " + (sqlReader[1]).ToString() + "          " + (sqlReader[2]).ToString() + "          " + (sqlReader[3]).ToString();
+                        text += "" + "\n";
                     }
 
                     if (sqlReader != null)
@@ -367,21 +368,21 @@ namespace KingCorporation
 
             sqlConnection.Open();
 
-            SqlCommand сommand = sqlConnection.CreateCommand();
-            сommand.CommandText = "select [last_name],  cast (NULLIF([commission],0)*100/[salary] as decimal (16, 2))  from [EMPLOYEE] ";
-            label1.Text = "select [last_name],  cast (NULLIF([commission],0)*100/[salary] as decimal (16, 2))  from [EMPLOYEE]";
+            SqlCommand command = sqlConnection.CreateCommand();
+            command.CommandText = "SELECT [last_name] FROM [EMPLOYEE] WHERE ([salary] < [commission])";
+            label1.Text = "SELECT[last_name] FROM[EMPLOYEE] WHERE([salary] < [commission])";
 
             try
             {
                 SqlDataReader sqlReader = null;
                 try
                 {
-                    sqlReader = сommand.ExecuteReader();
+                    sqlReader = command.ExecuteReader();
 
                     while (sqlReader.Read())
                     {
-                        text += sqlReader[0] + " " + sqlReader[1];
-                        text += "\n";
+                        text += (sqlReader[0]).ToString();
+                        text += "" + "\n";
                     }
 
                     if (sqlReader != null)
@@ -420,20 +421,181 @@ namespace KingCorporation
 
             sqlConnection.Open();
 
-            SqlCommand сommand = sqlConnection.CreateCommand();
-            сommand.CommandText = "select [last_name],  cast (NULLIF([commission],0)*100/[salary] as decimal (16, 2))  from [EMPLOYEE] ";
-            label1.Text = "select [last_name],  cast (NULLIF([commission],0)*100/[salary] as decimal (16, 2))  from [EMPLOYEE]";
+            SqlCommand command = sqlConnection.CreateCommand();
+            command.CommandText = "SELECT [last_name] FROM [EMPLOYEE] WHERE [last_name] LIKE 'S%'";
+            label1.Text = "SELECT [last_name] FROM [EMPLOYEE] WHERE [last_name] LIKE 'S%'";
 
             try
             {
                 SqlDataReader sqlReader = null;
                 try
                 {
-                    sqlReader = сommand.ExecuteReader();
+                    sqlReader = command.ExecuteReader();
 
                     while (sqlReader.Read())
                     {
-                        text += sqlReader[0] + " " + sqlReader[1];
+                        text += (sqlReader[0]).ToString();
+                        text += "\n";
+                    }
+
+                    if (sqlReader != null)
+                    {
+                        sqlReader.Close();
+                    }
+
+                    richTextBox1.Text = text;
+                }
+                catch
+                {
+                    MessageBox.Show("Что то пошло не так при считывании записей.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                finally
+                {
+                    if (sqlReader != null)
+                    {
+                        sqlReader.Close();
+                    }
+                }
+            }
+
+            catch
+            {
+                MessageBox.Show("Что то пошло не так.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void Requests7()
+        {
+            string text = "";
+
+            string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Slava\source\repos\KingCorporation\KingCorporation\KingCorporation.mdf;Integrated Security=True";
+
+            sqlConnection = new SqlConnection(connectionString);
+
+            sqlConnection.Open();
+
+            SqlCommand command = sqlConnection.CreateCommand();
+            command.CommandText = "select [first_name] from [EMPLOYEE] where ([job_id] != 671 AND [department_id] != 13)";
+            label1.Text = "select [first_name] from [EMPLOYEE] where ([job_id] != 671 AND [department_id] != 13)";
+
+            try
+            {
+                SqlDataReader sqlReader = null;
+                try
+                {
+                    sqlReader = command.ExecuteReader();
+
+                    while (sqlReader.Read())
+                    {
+                        text += sqlReader[0];
+                        text += "\n";
+                    }
+
+                    if (sqlReader != null)
+                    {
+                        sqlReader.Close();
+                    }
+
+                    richTextBox1.Text = text;
+                }
+                catch
+                {
+                    MessageBox.Show("Что то пошло не так при считывании записей.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                finally
+                {
+                    if (sqlReader != null)
+                    {
+                        sqlReader.Close();
+                    }
+                }
+            }
+
+            catch
+            {
+                MessageBox.Show("Что то пошло не так.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void Requests8()
+        {
+            string text = "";
+
+            string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Slava\source\repos\KingCorporation\KingCorporation\KingCorporation.mdf;Integrated Security=True";
+
+            sqlConnection = new SqlConnection(connectionString);
+
+            sqlConnection.Open();
+
+            SqlCommand command = sqlConnection.CreateCommand();
+
+            command.CommandText = "select [last_name] from [EMPLOYEE] INNER JOIN [JOB] ON ([EMPLOYEE].[job_id] = [JOB].[job_id]) WHERE ( ([JOB].[job_id] = 670) or ([JOB].[job_id] = 671) )";
+            label1.Text = "select [last_name] from [EMPLOYEE] INNER JOIN [JOB] ON ([EMPLOYEE].[job_id] = [JOB].[job_id]) WHERE ( ([JOB].[job_id] = 670) or ([JOB].[job_id] = 671) )";
+
+            try
+            {
+                SqlDataReader sqlReader = null;
+                try
+                {
+                    sqlReader = command.ExecuteReader();
+
+                    while (sqlReader.Read())
+                    {
+                        text += sqlReader[0];
+                        text += "\n";
+                    }
+
+                    if (sqlReader != null)
+                    {
+                        sqlReader.Close();
+                    }
+
+                    richTextBox1.Text = text;
+                }
+                catch
+                {
+                    MessageBox.Show("Что то пошло не так при считывании записей.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                finally
+                {
+                    if (sqlReader != null)
+                    {
+                        sqlReader.Close();
+                    }
+                }
+            }
+
+            catch
+            {
+                MessageBox.Show("Что то пошло не так.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void Requests9()
+        {
+            string text = "";
+
+            string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Slava\source\repos\KingCorporation\KingCorporation\KingCorporation.mdf;Integrated Security=True";
+
+            sqlConnection = new SqlConnection(connectionString);
+
+            sqlConnection.Open();
+
+            SqlCommand command = sqlConnection.CreateCommand();
+
+            command.CommandText = "SELECT [last_name] FROM [EMPLOYEE] WHERE [last_name] LIKE 'MAR%'";
+            label1.Text = "SELECT [last_name] FROM [EMPLOYEE] WHERE [last_name] LIKE 'MAR%'";
+
+            try
+            {
+                SqlDataReader sqlReader = null;
+                try
+                {
+                    sqlReader = command.ExecuteReader();
+
+                    while (sqlReader.Read())
+                    {
+                        text += sqlReader[0];
                         text += "\n";
                     }
 
