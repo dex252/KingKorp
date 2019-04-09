@@ -106,6 +106,7 @@
             this.cUSTOMERBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.kingCorporationDataSet = new KingCorporation.KingCorporationDataSet();
             this.requests = new System.Windows.Forms.TabPage();
+            this.label1 = new System.Windows.Forms.RichTextBox();
             this.button1 = new System.Windows.Forms.Button();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
@@ -121,7 +122,6 @@
             this.pRODUCTTableAdapter = new KingCorporation.KingCorporationDataSet7TableAdapters.PRODUCTTableAdapter();
             this.sALES_ORDERTableAdapter = new KingCorporation.KingCorporationDataSet8TableAdapters.SALES_ORDERTableAdapter();
             this.kingCorporationDataSet9 = new KingCorporation.KingCorporationDataSet();
-            this.label1 = new System.Windows.Forms.RichTextBox();
             this.tabControl1.SuspendLayout();
             this.dataBase.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView9)).BeginInit();
@@ -726,6 +726,14 @@
             this.requests.TabIndex = 1;
             this.requests.Text = "Requests";
             // 
+            // label1
+            // 
+            this.label1.Location = new System.Drawing.Point(613, 27);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(357, 378);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "";
+            // 
             // button1
             // 
             this.button1.Location = new System.Drawing.Point(225, 0);
@@ -754,7 +762,27 @@
             "7",
             "8",
             "9",
-            "10"});
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20",
+            "21",
+            "22",
+            "23",
+            "24",
+            "25",
+            "26",
+            "27",
+            "28",
+            "29",
+            "30"});
             this.comboBox2.Location = new System.Drawing.Point(0, 5);
             this.comboBox2.Name = "comboBox2";
             this.comboBox2.Size = new System.Drawing.Size(219, 21);
@@ -834,14 +862,6 @@
             // 
             this.kingCorporationDataSet9.DataSetName = "KingCorporationDataSet";
             this.kingCorporationDataSet9.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // label1
-            // 
-            this.label1.Location = new System.Drawing.Point(613, 27);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(357, 378);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "";
             // 
             // Form1
             // 
