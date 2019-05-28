@@ -158,21 +158,21 @@ namespace KingCorporation
                 case 14:
                     Requests15();
                     break;
-                    //case 15:
-                    //    Requests16();
-                    //    break;
-                    //case 16:
-                    //    Requests17();
-                    //    break;
-                    //case 17:
-                    //    Requests18();
-                    //    break;
-                    //case 18:
-                    //    Requests19();
-                    //    break;
-                    //case 19:
-                    //    Requests20();
-                    //    break;
+                case 15:
+                    Requests16();
+                    break;
+                case 16:
+                    Requests17();
+                    break;
+                case 17:
+                    Requests18();
+                    break;
+                case 18:
+                    Requests19();
+                    break;
+                case 19:
+                    Requests20();
+                    break;
                     //case 20:
                     //    Requests21();
                     //    break;
@@ -976,14 +976,12 @@ namespace KingCorporation
             sqlConnection.Open();
 
             SqlCommand command = sqlConnection.CreateCommand();
-            //command.CommandText = "SELECT [function] FROM [JOB] GROUP BY [function]";
-            //select [last_name] from [EMPLOYEE] INNER JOIN [JOB] ON ([EMPLOYEE].[job_id] = [JOB].[job_id]) WHERE ( ([JOB].[job_id] = 670) or ([JOB].[job_id] = 671) )
-            //SELECT F2.FIO, F1.NK  FROM F1, F2 WHERE F1.KK = F2.KK;   [JOB].[function], [EMPLOYEE].[salary]
-            //command.CommandText = "SELECT AVG([EMPLOYEE].[salary]) GROUP BY [EMPLOYEE].[job_id], [JOB].[function] FROM [JOB],[EMPLOYEE]  WHERE [JOB].[job_id] = [EMPLOYEE].[job_id]";
-            //command.CommandText = "SELECT AVG(_AVG), [EMPLOYEE].[job_id] FROM [EMPLOYEE]";
+
+            command.CommandText = "SELECT (SELECT [function] FROM [JOB] WHERE [job_id] = [EMPLOYEE].[job_id]), FLOOR(AVG([salary])) FROM [EMPLOYEE] GROUP BY [job_id]";
+
             label1.Text = "Выбрать среднюю зарплату по каждой должности. ";
             label1.Text += "\n" + "\n";
-            label1.Text += "SELECT [function] FROM [JOB] GROUP [function]";
+            label1.Text += command.CommandText;
 
             try
             {
@@ -994,7 +992,293 @@ namespace KingCorporation
 
                     while (sqlReader.Read())
                     {
-                        text += sqlReader[0].ToString();// + "         " + sqlReader[1].ToString();
+                        text += sqlReader[0].ToString() + "         " + sqlReader[1].ToString();
+                        text += "\n";
+                    }
+
+                    if (sqlReader != null)
+                    {
+                        sqlReader.Close();
+                    }
+
+                    richTextBox1.Text = text;
+                }
+                catch
+                {
+                    MessageBox.Show("Что то пошло не так при считывании записей.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                finally
+                {
+                    if (sqlReader != null)
+                    {
+                        sqlReader.Close();
+                    }
+                }
+            }
+
+            catch
+            {
+                MessageBox.Show("Что то пошло не так.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void Requests16()
+        {
+            string text = "";
+
+            string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Slava\source\repos\KingCorporation\KingCorporation\KingCorporation.mdf;Integrated Security=True";
+
+            sqlConnection = new SqlConnection(connectionString);
+
+            sqlConnection.Open();
+
+            SqlCommand command = sqlConnection.CreateCommand();
+
+            command.CommandText = "SELECT (SELECT [function] FROM [JOB] WHERE [job_id] = 670), FLOOR(AVG([salary])) FROM [EMPLOYEE] WHERE [job_id]=670";
+
+            label1.Text = "Выбрать среднюю зарплату продавцов (код должности - 670).";
+            label1.Text += "\n" + "\n";
+            label1.Text += command.CommandText;
+
+            try
+            {
+                SqlDataReader sqlReader = null;
+                try
+                {
+                    sqlReader = command.ExecuteReader();
+
+                    while (sqlReader.Read())
+                    {
+                        text += sqlReader[0].ToString() + "         " + sqlReader[1].ToString();
+                        text += "\n";
+                    }
+
+                    if (sqlReader != null)
+                    {
+                        sqlReader.Close();
+                    }
+
+                    richTextBox1.Text = text;
+                }
+                catch
+                {
+                    MessageBox.Show("Что то пошло не так при считывании записей.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                finally
+                {
+                    if (sqlReader != null)
+                    {
+                        sqlReader.Close();
+                    }
+                }
+            }
+
+            catch
+            {
+                MessageBox.Show("Что то пошло не так.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void Requests17()
+        {
+            string text = "";
+
+            string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Slava\source\repos\KingCorporation\KingCorporation\KingCorporation.mdf;Integrated Security=True";
+
+            sqlConnection = new SqlConnection(connectionString);
+
+            sqlConnection.Open();
+
+            SqlCommand command = sqlConnection.CreateCommand();
+           
+            command.CommandText = "SELECT [job_id], FLOOR(AVG([salary])) FROM [EMPLOYEE] WHERE (([job_id]=670) or ([job_id]=667)) GROUP BY [job_id]";
+
+            label1.Text = "Выбрать средние зарплаты продавцов (код должности - 670) и клерков (код должности - 667).";
+            label1.Text += "\n" + "\n";
+            label1.Text += command.CommandText;
+
+            try
+            {
+                SqlDataReader sqlReader = null;
+                try
+                {
+                    sqlReader = command.ExecuteReader();
+
+                    while (sqlReader.Read())
+                    {
+                        text += sqlReader[0].ToString() + "         " + sqlReader[1].ToString();
+                        text += "\n";
+                    }
+
+                    if (sqlReader != null)
+                    {
+                        sqlReader.Close();
+                    }
+
+                    richTextBox1.Text = text;
+                }
+                catch
+                {
+                    MessageBox.Show("Что то пошло не так при считывании записей.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                finally
+                {
+                    if (sqlReader != null)
+                    {
+                        sqlReader.Close();
+                    }
+                }
+            }
+
+            catch
+            {
+                MessageBox.Show("Что то пошло не так.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void Requests18()
+        {
+            string text = "";
+
+            string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Slava\source\repos\KingCorporation\KingCorporation\KingCorporation.mdf;Integrated Security=True";
+
+            sqlConnection = new SqlConnection(connectionString);
+
+            sqlConnection.Open();
+
+            SqlCommand command = sqlConnection.CreateCommand();
+
+            command.CommandText = "SELECT [product_id], COUNT([product_id]) FROM [ITEM] GROUP BY [product_id] HAVING COUNT([product_id]) < 10";
+
+
+            label1.Text = "Выбрать коды продуктов, по которым было совершено меньше 10 продаж.";
+            label1.Text += "\n" + "\n";
+            label1.Text += command.CommandText;
+
+            try
+            {
+                SqlDataReader sqlReader = null;
+                try
+                {
+                    sqlReader = command.ExecuteReader();
+
+                    while (sqlReader.Read())
+                    {
+                        text += sqlReader[0].ToString() + "         " + sqlReader[1].ToString();
+                        text += "\n";
+                    }
+
+                    if (sqlReader != null)
+                    {
+                        sqlReader.Close();
+                    }
+
+                    richTextBox1.Text = text;
+                }
+                catch
+                {
+                    MessageBox.Show("Что то пошло не так при считывании записей.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                finally
+                {
+                    if (sqlReader != null)
+                    {
+                        sqlReader.Close();
+                    }
+                }
+            }
+
+            catch
+            {
+                MessageBox.Show("Что то пошло не так.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void Requests19()
+        {
+            string text = "";
+
+            string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Slava\source\repos\KingCorporation\KingCorporation\KingCorporation.mdf;Integrated Security=True";
+
+            sqlConnection = new SqlConnection(connectionString);
+
+            sqlConnection.Open();
+
+            SqlCommand command = sqlConnection.CreateCommand();
+
+            command.CommandText = "SELECT MAX([salary]), [department_id] FROM [EMPLOYEE] WHERE ([job_id]=670) GROUP BY [department_id]";
+
+            label1.Text = "Выбрать максимальную зарплату продавцов (код должности - 670) по каждому отделу.";
+            label1.Text += "\n" + "\n";
+            label1.Text += command.CommandText;
+
+            try
+            {
+                SqlDataReader sqlReader = null;
+                try
+                {
+                    sqlReader = command.ExecuteReader();
+
+                    while (sqlReader.Read())
+                    {
+                        text += sqlReader[0].ToString() + "         " + sqlReader[1].ToString();
+                        text += "\n";
+                    }
+
+                    if (sqlReader != null)
+                    {
+                        sqlReader.Close();
+                    }
+
+                    richTextBox1.Text = text;
+                }
+                catch
+                {
+                    MessageBox.Show("Что то пошло не так при считывании записей.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                finally
+                {
+                    if (sqlReader != null)
+                    {
+                        sqlReader.Close();
+                    }
+                }
+            }
+
+            catch
+            {
+                MessageBox.Show("Что то пошло не так.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void Requests20()
+        {
+            string text = "";
+
+            string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Slava\source\repos\KingCorporation\KingCorporation\KingCorporation.mdf;Integrated Security=True";
+
+            sqlConnection = new SqlConnection(connectionString);
+
+            sqlConnection.Open();
+
+            SqlCommand command = sqlConnection.CreateCommand();
+
+            command.CommandText = "SELECT [last_name], [first_name] FROM [EMPLOYEE] ORDER BY [last_name], [first_name]";
+
+            label1.Text = "Выбрать список сотрудников фирмы в алфавитном порядке.";
+            label1.Text += "\n" + "\n";
+            label1.Text += command.CommandText;
+
+            try
+            {
+                SqlDataReader sqlReader = null;
+                try
+                {
+                    sqlReader = command.ExecuteReader();
+
+                    while (sqlReader.Read())
+                    {
+                        text += sqlReader[0].ToString() + "         " + sqlReader[1].ToString();
                         text += "\n";
                     }
 
