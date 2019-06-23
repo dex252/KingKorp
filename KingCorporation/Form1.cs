@@ -190,21 +190,21 @@ namespace KingCorporation
                 case 24:
                     Requests25();
                     break;
-                    //case 25:
-                    //    Requests26();
-                    //    break;
-                    //case 26:
-                    //    Requests27();
-                    //    break;
-                    //case 27:
-                    //    Requests28();
-                    //    break;
-                    //case 28:
-                    //    Requests29();
-                    //    break;
-                    //case 29:
-                    //    Requests30();
-                    //    break;
+                case 25:
+                    Requests26();
+                    break;
+                case 26:
+                    Requests27();
+                    break;
+                case 27:
+                    Requests28();
+                    break;
+                case 28:
+                    Requests29();
+                    break;
+                case 29:
+                    Requests30();
+                    break;
 
             }
         }
@@ -1595,6 +1595,301 @@ namespace KingCorporation
             }
         }
 
+        private void Requests26()
+        {
+            string text = "";
+
+            string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Slava\source\repos\KingCorporation\KingCorporation\KingCorporation.mdf;Integrated Security=True";
+
+            sqlConnection = new SqlConnection(connectionString);
+
+            sqlConnection.Open();
+
+            SqlCommand command = sqlConnection.CreateCommand();
+
+            command.CommandText = "SELECT SUM([total]) FROM [ITEM] WHERE " +
+                "([order_id] IN (SELECT [order_id] FROM [SALES_ORDER] WHERE " +
+                "([customer_id] IN (SELECT [customer_id] FROM [CUSTOMER] WHERE " +
+                "([salesperson_id] IN (SELECT [employee_id] FROM [EMPLOYEE] WHERE " +
+                "[EMPLOYEE].[last_name]='TURNER'))))))";
+
+            label1.Text = "Выбрать сумму всех продаж, которые обеспечил продавец TURNER.";
+            label1.Text += "\n" + "\n";
+            label1.Text += command.CommandText;
+
+            try
+            {
+                SqlDataReader sqlReader = null;
+                try
+                {
+                    sqlReader = command.ExecuteReader();
+
+                    while (sqlReader.Read())
+                    {
+                        text += sqlReader[0].ToString();
+                        text += "\n";
+                    }
+
+                    if (sqlReader != null)
+                    {
+                        sqlReader.Close();
+                    }
+
+                    richTextBox1.Text = text;
+                }
+                catch
+                {
+                    MessageBox.Show("Что то пошло не так при считывании записей.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                finally
+                {
+                    if (sqlReader != null)
+                    {
+                        sqlReader.Close();
+                    }
+                }
+            }
+
+            catch
+            {
+                MessageBox.Show("Что то пошло не так.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void Requests27()
+        {
+            string text = "";
+
+            string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Slava\source\repos\KingCorporation\KingCorporation\KingCorporation.mdf;Integrated Security=True";
+
+            sqlConnection = new SqlConnection(connectionString);
+
+            sqlConnection.Open();
+
+            SqlCommand command = sqlConnection.CreateCommand();
+
+            //1ый - выборка по лету 1990, 2ой = выборка по теннису 3 - id по датам 4(SUM)
+            command.CommandText = "SELECT [total] FROM [ITEM] WHERE (([order_id] IN (SELECT [order_id] FROM [SALES_ORDER] WHERE ([order_date]>='1990.06.01 0:00:00' AND [order_date]<'1990.09.01 0:00:00'))) AND ([product_id] IN (SELECT [product_id] FROM [PRODUCT] WHERE [description] LIKE '%TENNIS%')))";
+            // command.CommandText = "SELECT [total] FROM [ITEM] WHERE ([order_id] IN (SELECT [order_id] FROM [SALES_ORDER] WHERE ([order_date]>='1990.06.01 0:00:00' AND [order_date]<'1990.09.01 0:00:00')))";
+            // command.CommandText = "SELECT [total] FROM [ITEM] WHERE ([product_id] IN (SELECT [product_id] FROM [PRODUCT] WHERE [description] LIKE '%TENNIS%'))";
+            // command.CommandText = "SELECT [order_id] FROM [SALES_ORDER] WHERE ([order_date] >= '1990.06.01 0:00:00' AND [order_date] < '1990.09.01 0:00:00')";
+            // command.CommandText = "SELECT SUM([total]) FROM [ITEM] WHERE (([order_id] IN (SELECT [order_id] FROM [SALES_ORDER] WHERE ([order_date]>='1990.06.01 0:00:00' AND [order_date]<'1990.09.01 0:00:00'))) AND ([product_id] IN (SELECT [product_id] FROM [PRODUCT] WHERE [description] LIKE '%TENNIS%')))";
+
+            label1.Text = "Выбрать сумму всех продаж товаров, связанных с теннисом, за лето 1990г.";
+            label1.Text += "\n" + "\n";
+            label1.Text += command.CommandText;
+
+            try
+            {
+                SqlDataReader sqlReader = null;
+                try
+                {
+                    sqlReader = command.ExecuteReader();
+
+                    while (sqlReader.Read())
+                    {
+                        text += sqlReader[0].ToString();
+                        text += "\n";
+                    }
+
+                    if (sqlReader != null)
+                    {
+                        sqlReader.Close();
+                    }
+
+                    richTextBox1.Text = text;
+                }
+                catch
+                {
+                    MessageBox.Show("Что то пошло не так при считывании записей.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                finally
+                {
+                    if (sqlReader != null)
+                    {
+                        sqlReader.Close();
+                    }
+                }
+            }
+
+            catch
+            {
+                MessageBox.Show("Что то пошло не так.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void Requests28()
+        {
+            string text = "";
+
+            string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Slava\source\repos\KingCorporation\KingCorporation\KingCorporation.mdf;Integrated Security=True";
+
+            sqlConnection = new SqlConnection(connectionString);
+
+            sqlConnection.Open();
+
+            SqlCommand command = sqlConnection.CreateCommand();
+
+            command.CommandText = "SELECT [first_name], [last_name], [salary] FROM [EMPLOYEE] WHERE [hire_date]=(SELECT MAX([hire_date]) FROM [EMPLOYEE]) OR [hire_date]= (SELECT MIN([hire_date]) FROM [EMPLOYEE])";
+
+            label1.Text = " Выбрать имена и зарплаты самого старого и самого молодого сотрудника фирмы. ('Возраст' сотрудника определять по дате его поступления на работу в фирму). ";
+            label1.Text += "\n" + "\n";
+            label1.Text += command.CommandText;
+
+            try
+            {
+                SqlDataReader sqlReader = null;
+                try
+                {
+                    sqlReader = command.ExecuteReader();
+
+                    while (sqlReader.Read())
+                    {
+                        text += sqlReader[0].ToString() + "    " + sqlReader[1].ToString() + "    " + sqlReader[2].ToString();
+                        text += "\n";
+                    }
+
+                    if (sqlReader != null)
+                    {
+                        sqlReader.Close();
+                    }
+
+                    richTextBox1.Text = text;
+                }
+                catch
+                {
+                    MessageBox.Show("Что то пошло не так при считывании записей.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                finally
+                {
+                    if (sqlReader != null)
+                    {
+                        sqlReader.Close();
+                    }
+                }
+            }
+
+            catch
+            {
+                MessageBox.Show("Что то пошло не так.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void Requests29()
+        {
+            string text = "";
+
+            string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Slava\source\repos\KingCorporation\KingCorporation\KingCorporation.mdf;Integrated Security=True";
+
+            sqlConnection = new SqlConnection(connectionString);
+
+            sqlConnection.Open();
+
+            SqlCommand command = sqlConnection.CreateCommand();
+
+            command.CommandText = "SELECT  [first_name], [last_name], FLOOR([salary]-(SELECT AVG([salary]) FROM [EMPLOYEE])) FROM [EMPLOYEE]";
+
+            label1.Text = "Для каждого продавца вывести разность между его зарплатой и средней зарплатой продавцов в фирме. ";
+            label1.Text += "\n" + "\n";
+            label1.Text += command.CommandText;
+
+            try
+            {
+                SqlDataReader sqlReader = null;
+                try
+                {
+                    sqlReader = command.ExecuteReader();
+
+                    while (sqlReader.Read())
+                    {
+                        text += sqlReader[0].ToString() + "  " + sqlReader[1].ToString() + "     " + sqlReader[2].ToString();
+                        text += "\n";
+                    }
+
+                    if (sqlReader != null)
+                    {
+                        sqlReader.Close();
+                    }
+
+                    richTextBox1.Text = text;
+                }
+                catch
+                {
+                    MessageBox.Show("Что то пошло не так при считывании записей.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                finally
+                {
+                    if (sqlReader != null)
+                    {
+                        sqlReader.Close();
+                    }
+                }
+            }
+
+            catch
+            {
+                MessageBox.Show("Что то пошло не так.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void Requests30()
+        {
+            string text = "";
+
+            string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Slava\source\repos\KingCorporation\KingCorporation\KingCorporation.mdf;Integrated Security=True";
+
+            sqlConnection = new SqlConnection(connectionString);
+
+            sqlConnection.Open();
+
+            SqlCommand command = sqlConnection.CreateCommand();
+
+            //Первый вариант - с middle_initial, т.к. однофомильцев нет, проверить - смена 1 на 0 в having
+            command.CommandText = "SELECT [first_name], [middle_initial], [last_name] FROM [EMPLOYEE] WHERE [middle_initial] IN (SELECT [middle_initial] FROM [EMPLOYEE] GROUP BY [middle_initial] HAVING COUNT(*) > 3)";
+            command.CommandText = "SELECT [first_name], [middle_initial], [last_name] FROM [EMPLOYEE] WHERE [last_name] IN (SELECT [last_name] FROM [EMPLOYEE] GROUP BY [last_name] HAVING COUNT(*) > 1)";
+
+            label1.Text = "(*)Вывести имена, средние инициалы и фамилии всех однофамильцев. ";
+            label1.Text += "\n" + "\n";
+            label1.Text += command.CommandText;
+
+            try
+            {
+                SqlDataReader sqlReader = null;
+                try
+                {
+                    sqlReader = command.ExecuteReader();
+
+                    while (sqlReader.Read())
+                    {
+                        text += sqlReader[0].ToString() + "   " + sqlReader[1].ToString() + "   " + sqlReader[2].ToString();
+                        text += "\n";
+                    }
+
+                    if (sqlReader != null)
+                    {
+                        sqlReader.Close();
+                    }
+
+                    richTextBox1.Text = text;
+                }
+                catch
+                {
+                    MessageBox.Show("Что то пошло не так при считывании записей.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                finally
+                {
+                    if (sqlReader != null)
+                    {
+                        sqlReader.Close();
+                    }
+                }
+            }
+
+            catch
+            {
+                MessageBox.Show("Что то пошло не так.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
 
 
 
