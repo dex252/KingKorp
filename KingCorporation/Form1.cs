@@ -111,6 +111,8 @@ namespace KingCorporation
 
         private void comboBox2_SelectionChangeCommitted(object sender, EventArgs e)
         {
+            //Это худшее, что я когда-либо делал =( Целесообразней было бы занести все функции и их индексы в массив с последующим анализом
+
             switch (comboBox2.SelectedIndex)
             {
                 case 0:
@@ -173,21 +175,21 @@ namespace KingCorporation
                 case 19:
                     Requests20();
                     break;
-                    //case 20:
-                    //    Requests21();
-                    //    break;
-                    //case 21:
-                    //    Requests22();
-                    //    break;
-                    //case 22:
-                    //    Requests23();
-                    //    break;
-                    //case 23:
-                    //    Requests24();
-                    //    break;
-                    //case 24:
-                    //    Requests25();
-                    //    break;
+                case 20:
+                    Requests21();
+                    break;
+                case 21:
+                    Requests22();
+                    break;
+                case 22:
+                    Requests23();
+                    break;
+                case 23:
+                    Requests24();
+                    break;
+                case 24:
+                    Requests25();
+                    break;
                     //case 25:
                     //    Requests26();
                     //    break;
@@ -1307,6 +1309,296 @@ namespace KingCorporation
                 MessageBox.Show("Что то пошло не так.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-    }
 
+        private void Requests21()
+        {
+            string text = "";
+
+            string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Slava\source\repos\KingCorporation\KingCorporation\KingCorporation.mdf;Integrated Security=True";
+
+            sqlConnection = new SqlConnection(connectionString);
+
+            sqlConnection.Open();
+
+            SqlCommand command = sqlConnection.CreateCommand();
+
+            command.CommandText = "SELECT [department_id], [name], (SELECT [regional_group] FROM [LOCATION] WHERE [location_id]=[DEPARTMENT].[location_id]) FROM [DEPARTMENT]";
+           
+            label1.Text = "Выбрать всю информацию о каждом отделе и месте его расположения.";
+            label1.Text += "\n" + "\n";
+            label1.Text += command.CommandText;
+
+            try
+            {
+                SqlDataReader sqlReader = null;
+                try
+                {
+                    sqlReader = command.ExecuteReader();
+
+                    while (sqlReader.Read())
+                    {
+                        text += sqlReader[0].ToString() + "         " + sqlReader[1].ToString() + "         " + sqlReader[2].ToString();
+                        text += "\n";
+                    }
+
+                    if (sqlReader != null)
+                    {
+                        sqlReader.Close();
+                    }
+
+                    richTextBox1.Text = text;
+                }
+                catch
+                {
+                    MessageBox.Show("Что то пошло не так при считывании записей.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                finally
+                {
+                    if (sqlReader != null)
+                    {
+                        sqlReader.Close();
+                    }
+                }
+            }
+
+            catch
+            {
+                MessageBox.Show("Что то пошло не так.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void Requests22()
+        {
+            string text = "";
+
+            string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Slava\source\repos\KingCorporation\KingCorporation\KingCorporation.mdf;Integrated Security=True";
+
+            sqlConnection = new SqlConnection(connectionString);
+
+            sqlConnection.Open();
+
+            SqlCommand command = sqlConnection.CreateCommand();
+
+            command.CommandText = "SELECT (SELECT [regional_group] FROM [LOCATION] WHERE [location_id]=(SELECT [location_id] FROM [DEPARTMENT] WHERE [department_id]=[EMPLOYEE].[department_id])), [last_name], (SELECT [function] FROM [JOB] WHERE [job_id]=[EMPLOYEE].[job_id]) FROM [EMPLOYEE] ORDER BY EMPLOYEE.department_id DESC";
+
+            label1.Text = "Выбрать список фамилий сотрудников по городам, где они работают, с указанием для каждого его должности.";
+            label1.Text += "\n" + "\n";
+            label1.Text += command.CommandText;
+
+            try
+            {
+                SqlDataReader sqlReader = null;
+                try
+                {
+                    sqlReader = command.ExecuteReader();
+
+                    while (sqlReader.Read())
+                    {
+                        text += sqlReader[0].ToString() + "         " + sqlReader[1].ToString() + "         " + sqlReader[2].ToString();
+                        text += "\n";
+                    }
+
+                    if (sqlReader != null)
+                    {
+                        sqlReader.Close();
+                    }
+
+                    richTextBox1.Text = text;
+                }
+                catch
+                {
+                    MessageBox.Show("Что то пошло не так при считывании записей.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                finally
+                {
+                    if (sqlReader != null)
+                    {
+                        sqlReader.Close();
+                    }
+                }
+            }
+
+            catch
+            {
+                MessageBox.Show("Что то пошло не так.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void Requests23()
+        {
+            string text = "";
+
+            string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Slava\source\repos\KingCorporation\KingCorporation\KingCorporation.mdf;Integrated Security=True";
+
+            sqlConnection = new SqlConnection(connectionString);
+
+            sqlConnection.Open();
+
+            SqlCommand command = sqlConnection.CreateCommand();
+
+            command.CommandText = "SELECT [name] FROM [CUSTOMER] WHERE [salesperson_id]=(SELECT [employee_id] FROM [EMPLOYEE] WHERE [last_name]='TURNER')";
+
+            label1.Text = "Выбрать всех покупателей, с которыми работает продавец TURNER.";
+            label1.Text += "\n" + "\n";
+            label1.Text += command.CommandText;
+
+            try
+            {
+                SqlDataReader sqlReader = null;
+                try
+                {
+                    sqlReader = command.ExecuteReader();
+
+                    while (sqlReader.Read())
+                    {
+                        text += sqlReader[0].ToString();
+                        text += "\n";
+                    }
+
+                    if (sqlReader != null)
+                    {
+                        sqlReader.Close();
+                    }
+
+                    richTextBox1.Text = text;
+                }
+                catch
+                {
+                    MessageBox.Show("Что то пошло не так при считывании записей.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                finally
+                {
+                    if (sqlReader != null)
+                    {
+                        sqlReader.Close();
+                    }
+                }
+            }
+
+            catch
+            {
+                MessageBox.Show("Что то пошло не так.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void Requests24()
+        {
+            string text = "";
+
+            string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Slava\source\repos\KingCorporation\KingCorporation\KingCorporation.mdf;Integrated Security=True";
+
+            sqlConnection = new SqlConnection(connectionString);
+
+            sqlConnection.Open();
+
+            SqlCommand command = sqlConnection.CreateCommand();
+
+            command.CommandText = "SELECT [last_name] FROM [EMPLOYEE] WHERE (SELECT COUNT([salesperson_id]) FROM [CUSTOMER] WHERE [salesperson_id]=[EMPLOYEE].[employee_id])=0";
+
+            label1.Text = "Выбрать сотрудников, которые не закреплены за конкретным заказчиком.";
+            label1.Text += "\n" + "\n";
+            label1.Text += command.CommandText;
+
+            try
+            {
+                SqlDataReader sqlReader = null;
+                try
+                {
+                    sqlReader = command.ExecuteReader();
+
+                    while (sqlReader.Read())
+                    {
+                        text += sqlReader[0].ToString();
+                        text += "\n";
+                    }
+
+                    if (sqlReader != null)
+                    {
+                        sqlReader.Close();
+                    }
+
+                    richTextBox1.Text = text;
+                }
+                catch
+                {
+                    MessageBox.Show("Что то пошло не так при считывании записей.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                finally
+                {
+                    if (sqlReader != null)
+                    {
+                        sqlReader.Close();
+                    }
+                }
+            }
+
+            catch
+            {
+                MessageBox.Show("Что то пошло не так.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void Requests25()
+        {
+            string text = "";
+
+            string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Slava\source\repos\KingCorporation\KingCorporation\KingCorporation.mdf;Integrated Security=True";
+
+            sqlConnection = new SqlConnection(connectionString);
+
+            sqlConnection.Open();
+
+            SqlCommand command = sqlConnection.CreateCommand();
+
+            command.CommandText = "SELECT [EMPLOYEE].[last_name], [CUSTOMER].[name] FROM [EMPLOYEE],[CUSTOMER] WHERE (SELECT COUNT([salesperson_id]) FROM [CUSTOMER] WHERE [salesperson_id]=[EMPLOYEE].[employee_id])>1 AND [employee_id]=[salesperson_id] ORDER BY [EMPLOYEE].[employee_id]";
+
+            label1.Text = "Выбрать имена продавцов, которые работают более чем с одним покупателем и названия покупателей, которых они обслуживают.";
+            label1.Text += "\n" + "\n";
+            label1.Text += command.CommandText;
+
+            try
+            {
+                SqlDataReader sqlReader = null;
+                try
+                {
+                    sqlReader = command.ExecuteReader();
+
+                    while (sqlReader.Read())
+                    {
+                        text += sqlReader[0].ToString() +"    "+ sqlReader[1].ToString();
+                        text += "\n";
+                    }
+
+                    if (sqlReader != null)
+                    {
+                        sqlReader.Close();
+                    }
+
+                    richTextBox1.Text = text;
+                }
+                catch
+                {
+                    MessageBox.Show("Что то пошло не так при считывании записей.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                finally
+                {
+                    if (sqlReader != null)
+                    {
+                        sqlReader.Close();
+                    }
+                }
+            }
+
+            catch
+            {
+                MessageBox.Show("Что то пошло не так.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+
+
+
+
+
+    }
 }
